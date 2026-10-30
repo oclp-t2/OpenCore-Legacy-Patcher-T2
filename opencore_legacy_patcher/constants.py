@@ -38,6 +38,10 @@ APP_INSTALL_DIRECTORY:     str = "/Library/Application Support/albert-mueller/Op
 INSTALLER_PKG_NAME:        str = f"{APP_NAME}.pkg"
 LEGACY_INSTALLER_PKG_NAME: str = f"{LEGACY_APP_NAME}.pkg"
 
+# Was OpenCore-Patcher-Uninstaller.pkg. Nothing downloads it by name, so unlike
+# the installer there is no package under the old name.
+UNINSTALLER_PKG_NAME:      str = f"{APP_NAME}-Uninstaller.pkg"
+
 
 class Constants:
     def __init__(self) -> None:

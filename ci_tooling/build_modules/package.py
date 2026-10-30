@@ -206,8 +206,8 @@ class GeneratePackage:
         Generate the uninstaller, installer and AutoPkg-Assets packages
         """
         self._build_package(
-            "OpenCore-Patcher-Uninstaller.pkg",
-            pkg_output="./dist/OpenCore-Patcher-Uninstaller.pkg",
+            constants.UNINSTALLER_PKG_NAME,
+            pkg_output=f"./dist/{constants.UNINSTALLER_PKG_NAME}",
             pkg_bundle_id="com.dortania.opencore-legacy-patcher-uninstaller",
             pkg_version=constants.Constants().patcher_version,
             pkg_background="./ci_tooling/pkg_assets/PkgBackground-Uninstaller.png",
@@ -217,10 +217,12 @@ class GeneratePackage:
             pkg_welcome=self._generate_uninstaller_welcome(),
         )
 
-        # A leftover from an earlier build with --legacy-installer would otherwise
-        # be hashed into certificates.txt and could end up on a release by accident.
+        # Leftovers from earlier builds (with --legacy-installer, or from before the
+        # uninstaller was renamed) would otherwise be hashed into certificates.txt
+        # and could end up on a release by accident.
         if not self._legacy_installer:
             Path("./dist", constants.LEGACY_INSTALLER_PKG_NAME).unlink(missing_ok=True)
+        Path("./dist", "OpenCore-Patcher-Uninstaller.pkg").unlink(missing_ok=True)
 
         for _package in self.installer_packages:
             _is_legacy = _package == constants.LEGACY_INSTALLER_PKG_NAME
